@@ -48,5 +48,11 @@ namespace TPWinforms
                 pbxArticulo.Load("https://designshack.net/wp-content/uploads/placeholder-image.png");
             }
         }
+
+        private void btnAgregarArticulo_Click(object sender, EventArgs e)
+        {
+            frmAltaArticulo alta = new frmAltaArticulo();
+            alta.ShowDialog();
+        }
     }
 }
