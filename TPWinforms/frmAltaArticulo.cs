@@ -39,11 +39,6 @@ namespace TPWinforms
 
             try
             {
-                // Lo que se busca con este IF es saber si el objeto articuloAux esta vacio o no.
-                // Si esta vacio significa que vamos a agregar un nuevo articulo a la BD
-                // Caso contrario vamos a modificar un articulo.
-                // Como sabemos que articulo vamos modificar? en la linea 33 guardamos el articulo previamente seleccionado
-                // en el form principal
                 if (articuloAux == null)
                 {
                     articuloAux = new Articulo();
@@ -57,9 +52,7 @@ namespace TPWinforms
                 articuloAux.Categoria = (Categoria)cboCategoria.SelectedItem;
                 articuloAux.Precio = decimal.Parse(txbPrecio.Text);
 
-
-                // Si el Id del articulo es distinto de 0 eso significa que ya tenia un Id asigando
-                // por ende vamos a modificar un articulo existente
+                
                 if (articuloAux.Id != 0)
                 {
                     negocio.modificar(articuloAux);
@@ -68,12 +61,12 @@ namespace TPWinforms
                 else
                 {
                     negocio.agregar(articuloAux);
-                    negocio.agregarImagen(negocio.leerDatos(articuloAux));
+                    //negocio.agregarImagen(negocio.leerDatos(articuloAux));
                     MessageBox.Show("Articulo agregado en el inventario");
-                    //Agregar registro de imagen
+                    
 
                 }
-
+                
                 Close();
             }
             catch (Exception ex)
@@ -91,11 +84,11 @@ namespace TPWinforms
             {
                 // agregar los valores predeterminados para los campos de Marca y Negocio
                 cboMarca.DataSource = marcaNegocio.listar();
-                cboMarca.ValueMember = "Id";
-                cboMarca.DisplayMember = "Descripcion";
+                cboMarca.ValueMember = "Codigo";
+                cboMarca.DisplayMember = "Nombre";
                 cboCategoria.DataSource = categoriaNegocio.listar();
-                cbo.ValueMember = "Id";
-                cboCategoria.DisplayMember = "Descripcion";
+                cboCategoria.ValueMember = "Codigo";
+                cboCategoria.DisplayMember = "Nombre";
 
 
                 // Bansandonos en la misma logica... si seleccionamos un articulo en el form principal e ingresamos

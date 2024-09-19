@@ -24,6 +24,7 @@ namespace negocio
                 {
                     Articulo aux = new Articulo();
 
+                        aux.Id = (int)datos.Lector["Id"];
                     if (!(datos.Lector["Codigo"] is DBNull))
                         aux.Codigo = (string)datos.Lector["Codigo"];
                     if (!(datos.Lector["Nombre"] is DBNull))
@@ -93,10 +94,11 @@ namespace negocio
             try
             {
                 datos.setearConsulta("update ARTICULOS set Codigo = @codigo, Nombre = @nombre, Descripcion = @descripcion, IdMarca = @idMarca, IdCategoria = @idCategoria, Precio = @precio where Id = @id");
+                datos.setearParametro("@Id", art.Id);
                 datos.setearParametro("@codigo", art.Codigo);
                 datos.setearParametro("@nombre", art.Nombre);
                 datos.setearParametro("@descripcion", art.Descripcion);
-                datos.setearParametro("idMarca", art.Marca.Codigo);
+                datos.setearParametro("@idMarca", art.Marca.Codigo);
                 datos.setearParametro("@idCategoria", art.Categoria.Codigo);
                 datos.setearParametro("@precio", art.Precio);
 
@@ -113,6 +115,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
 
+            /*
             try
             {
                 datos.setearConsulta("update IMAGENES set ImagenUrl = @imagen where IdArticulo = " + art.Imagen);
@@ -128,6 +131,7 @@ namespace negocio
             {
                 datos.cerrarConexion();
             }
+            */
 
         }
 

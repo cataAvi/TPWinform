@@ -33,6 +33,8 @@ namespace TPWinforms
                 listaArticulo = negocio.listar();
                 dgvArticulos.DataSource = listaArticulo;
                 dgvArticulos.Columns["Imagen"].Visible = false;
+                dgvArticulos.Columns["Id"].Visible = false;
+
                 cargarImagen(listaArticulo[0].Imagen);
             }
             catch (Exception ex)
