@@ -81,7 +81,7 @@ namespace TPWinforms
             this.Controls.Add(this.tbMarca);
             this.Controls.Add(this.lbMarca);
             this.Name = "agregarMarca";
-            this.Text = "agregarMarca";
+            this.Text = "Alta Marca";
             this.ResumeLayout(false);
             this.PerformLayout();
 

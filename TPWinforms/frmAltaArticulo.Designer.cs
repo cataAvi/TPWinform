@@ -99,20 +99,19 @@ namespace TPWinforms
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(99, 361);
+            this.btnAceptar.Location = new System.Drawing.Point(413, 310);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
+            this.btnAceptar.Size = new System.Drawing.Size(87, 32);
             this.btnAceptar.TabIndex = 6;
             this.btnAceptar.Text = "Aceptar";
-            this.btnAceptar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(243, 361);
+            this.btnCancelar.Location = new System.Drawing.Point(515, 310);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.Size = new System.Drawing.Size(91, 32);
             this.btnCancelar.TabIndex = 7;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -173,7 +172,7 @@ namespace TPWinforms
             // 
             // pcbUrlImagen
             // 
-            this.pcbUrlImagen.Location = new System.Drawing.Point(366, 51);
+            this.pcbUrlImagen.Location = new System.Drawing.Point(384, 51);
             this.pcbUrlImagen.Name = "pcbUrlImagen";
             this.pcbUrlImagen.Size = new System.Drawing.Size(240, 210);
             this.pcbUrlImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -219,7 +218,7 @@ namespace TPWinforms
             this.Controls.Add(this.lblNombre);
             this.Controls.Add(this.lblCodigo);
             this.Name = "frmAltaArticulo";
-            this.Text = "2";
+            this.Text = "Alta Articulo";
             this.Load += new System.EventHandler(this.frmAltaArticulo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pcbUrlImagen)).EndInit();
             this.ResumeLayout(false);

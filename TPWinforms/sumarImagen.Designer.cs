@@ -81,7 +81,7 @@ namespace TPWinforms
             this.Controls.Add(this.tbURLImag);
             this.Controls.Add(this.lblUrlImagen);
             this.Name = "sumarImagen";
-            this.Text = "sumarImagen";
+            this.Text = "Agregar Imagen";
             this.ResumeLayout(false);
             this.PerformLayout();
 

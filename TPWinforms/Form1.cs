@@ -23,6 +23,14 @@ namespace TPWinforms
         private void Form1_Load(object sender, EventArgs e)
         {
             cargar();
+            cboCampo.Items.Add("Codigo");
+            cboCampo.Items.Add("Nombre");
+            cboCampo.Items.Add("Descripcion");
+            cboCampo.Items.Add("Precio");
+            cboCampo.Items.Add("Marca");
+            cboCampo.Items.Add("Categoria");
+
+
         }
 
         private void cargar()
@@ -32,8 +40,7 @@ namespace TPWinforms
                 ArticuloNegocio negocio = new ArticuloNegocio();
                 listaArticulo = negocio.listar();
                 dgvArticulos.DataSource = listaArticulo;
-                dgvArticulos.Columns["Imagen"].Visible = false;
-                dgvArticulos.Columns["Id"].Visible = false;
+                ocultarColumnas();
 
                 cargarImagen(listaArticulo[0].Imagen);
             }
@@ -43,13 +50,24 @@ namespace TPWinforms
             }
         }
 
+        private void ocultarColumnas()
+        {
+            dgvArticulos.Columns["Imagen"].Visible = false;
+            dgvArticulos.Columns["Id"].Visible = false;
+            dgvArticulos.Columns["posVec"].Visible = false;
+        }
+
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
-            seleccionado.Imagenes = negocio.cargarVecImagenes(seleccionado.Id);
-            if (seleccionado.Imagenes.Count > 0)
-                cargarImagen(seleccionado.Imagenes[0]);
+            if(dgvArticulos.CurrentRow != null)
+            {
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+                seleccionado.Imagenes = negocio.cargarVecImagenes(seleccionado.Id);
+                if (seleccionado.Imagenes.Count > 0)
+                    cargarImagen(seleccionado.Imagenes[0]);
+            }
+            
         }
 
         private void cargarImagen(string imagen)
@@ -163,6 +181,78 @@ namespace TPWinforms
         {
             agregarCategoria aux = new agregarCategoria();
             aux.ShowDialog();
+        }
+
+        private void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            try
+            {
+                string campo = cboCampo.SelectedItem.ToString();
+                string criterio = cboCriterio.SelectedItem.ToString();
+                string filtro = txbFiltro.Text;
+
+                if (filtro != null)
+                {
+                    dgvArticulos.DataSource = negocio.filtrar(campo, criterio, filtro);
+                }
+                else
+                {
+                    dgvArticulos.DataSource = listaArticulo;
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
+
+        }
+
+        private void txbFiltro_TextChanged(object sender, EventArgs e)
+        {
+            List<Articulo> listaFiltrada;
+            string filtro = txbFiltroRapido.Text;
+
+
+            if (filtro.Length >= 3)
+            {
+                listaFiltrada = listaArticulo.FindAll(x => x.Nombre.ToUpper().Contains(filtro.ToUpper()) || x.Descripcion.ToUpper().Contains(filtro.ToUpper()));
+            }
+            else
+            {
+                listaFiltrada = listaArticulo;
+            }
+
+            dgvArticulos.DataSource = null;
+            dgvArticulos.DataSource = listaFiltrada;
+            ocultarColumnas();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboCampo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string opcion = cboCampo.SelectedItem.ToString();
+
+            if(opcion == "Precio")
+            {
+                cboCriterio.Items.Clear();
+                cboCriterio.Items.Add("Mayor a");
+                cboCriterio.Items.Add("Menor a");
+                cboCriterio.Items.Add("Igual a");
+            }
+            else
+            {
+                cboCriterio.Items.Clear();
+                cboCriterio.Items.Add("Comienza con");
+                cboCriterio.Items.Add("Termina con");
+                cboCriterio.Items.Add("Contiene");
+            }
         }
     }
 }

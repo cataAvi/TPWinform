@@ -81,7 +81,7 @@ namespace TPWinforms
             this.Controls.Add(this.tbCategoria);
             this.Controls.Add(this.label1);
             this.Name = "agregarCategoria";
-            this.Text = "agregarCategoria";
+            this.Text = "Alta Categoria";
             this.ResumeLayout(false);
             this.PerformLayout();
 
