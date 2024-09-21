@@ -43,7 +43,7 @@ namespace TPWinforms
                 {
                     articuloAux = new Articulo();
                 }
-
+                
                 articuloAux.Codigo = txbCodigo.Text;
                 articuloAux.Nombre = txbNombre.Text;
                 articuloAux.Descripcion = txbDescripcion.Text;
@@ -61,7 +61,7 @@ namespace TPWinforms
                 else
                 {
                     negocio.agregar(articuloAux);
-                    //negocio.agregarImagen(negocio.leerDatos(articuloAux));
+                    negocio.agregarImagen(negocio.leerDatos(articuloAux));
                     MessageBox.Show("Articulo agregado en el inventario");
                     
 

@@ -45,8 +45,11 @@ namespace TPWinforms
 
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
         {
+            ArticuloNegocio negocio = new ArticuloNegocio();
             Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
-            cargarImagen(seleccionado.Imagen);
+            seleccionado.Imagenes = negocio.cargarVecImagenes(seleccionado.Id);
+            if (seleccionado.Imagenes.Count > 0)
+                cargarImagen(seleccionado.Imagenes[0]);
         }
 
         private void cargarImagen(string imagen)
@@ -98,6 +101,68 @@ namespace TPWinforms
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            Articulo seleccionado;
+
+            seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+            List<string> lista = new List<string>();
+            lista = negocio.cargarVecImagenes(seleccionado.Id);
+            int maximo = lista.Count;
+
+            if (lista.Count > 1)
+            {
+                if (seleccionado.posVec < (maximo - 1))
+                    seleccionado.posVec++;
+                else if (seleccionado.posVec == (maximo - 1))
+                    seleccionado.posVec = 0;
+
+                cargarImagen(lista[seleccionado.posVec]);
+            }
+
+            
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            Articulo seleccionado;
+
+            seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+            List<string> lista = new List<string>();
+            lista = negocio.cargarVecImagenes(seleccionado.Id);
+            int maximo = lista.Count;
+
+            if (seleccionado.posVec == 0)
+                seleccionado.posVec = maximo - 1;
+            else
+                seleccionado.posVec--;
+
+            cargarImagen(lista[seleccionado.posVec]);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Articulo selecionado;
+            selecionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+            sumarImagen aux = new sumarImagen(selecionado);
+            aux.ShowDialog();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            agregarMarca aux = new agregarMarca();
+            aux.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            agregarCategoria aux = new agregarCategoria();
+            aux.ShowDialog();
         }
     }
 }
