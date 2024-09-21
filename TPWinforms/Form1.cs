@@ -92,12 +92,14 @@ namespace TPWinforms
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            Articulo selecionado;
-            selecionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
 
-            frmAltaArticulo modificar = new frmAltaArticulo(selecionado); // instancio el form de modificacion/alta pero usando el constructor donde tiene como parametro un objeto Articulo
-            modificar.ShowDialog();
-            cargar();
+                Articulo selecionado;
+                selecionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+                frmAltaArticulo modificar = new frmAltaArticulo(selecionado); // instancio el form de modificacion/alta pero usando el constructor donde tiene como parametro un objeto Articulo
+                modificar.ShowDialog();
+                cargar();
+
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -183,11 +185,53 @@ namespace TPWinforms
             aux.ShowDialog();
         }
 
+        private bool validarFiltro()
+        {
+            if (cboCampo.SelectedIndex < 0)
+            {
+                MessageBox.Show("Por favor, seleccione el campo para filtrar");
+                return true;
+            }
+            if (cboCriterio.SelectedIndex < 0)
+            {
+                MessageBox.Show("Por favor, seleccione el criterio para filtrar");
+                return true;
+            }
+            if (cboCampo.SelectedItem.ToString() == "Precio")
+            {
+                if (string.IsNullOrEmpty(txbFiltro.Text))
+                {
+                    MessageBox.Show("Debe cargar un valor numérico");
+                    return true;
+                }
+                if (!(soloNumeros(txbFiltro.Text)))
+                {
+                    MessageBox.Show("Por favor, solo ingresar números");
+                    return true;
+                }
+            }
+                
+            return false;
+        }
+
+        private bool soloNumeros(string cadena)
+        {
+            foreach(char caracter in cadena)
+            {
+                if (!(char.IsNumber(caracter)))
+                    return false;
+            }
+            return true;
+        }
+
         private void btnFiltrar_Click(object sender, EventArgs e)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
             try
             {
+                if (validarFiltro())
+                    return;
+
                 string campo = cboCampo.SelectedItem.ToString();
                 string criterio = cboCriterio.SelectedItem.ToString();
                 string filtro = txbFiltro.Text;

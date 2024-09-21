@@ -21,11 +21,27 @@ namespace TPWinforms
 
         private void btAgregar_Click(object sender, EventArgs e)
         {
-            Marca nueva = new Marca();
-            nueva.Nombre = tbMarca.Text;
-            MarcaNegocio negocio = new MarcaNegocio();
-            negocio.agregarMarca(nueva);
-            MessageBox.Show("Marca agregada correctamente");
+            try
+            {
+                if(tbMarca.Text == "")
+                {
+                    MessageBox.Show("Por favor ingresar los datos requeridos");
+                }
+                else
+                {
+                    Marca nueva = new Marca();
+                    nueva.Nombre = tbMarca.Text;
+                    MarcaNegocio negocio = new MarcaNegocio();
+                    negocio.agregarMarca(nueva);
+                    MessageBox.Show("Marca agregada correctamente");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         private void btSalir_Click(object sender, EventArgs e)

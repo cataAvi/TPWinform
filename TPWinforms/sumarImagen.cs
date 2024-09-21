@@ -24,12 +24,27 @@ namespace TPWinforms
 
         private void btCargar_Click(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            //Articulo aux = new Articulo();
+            try
+            {
+                if(tbURLImag.Text == "")
+                {
+                    MessageBox.Show("Por favor, cargar la url de la imagen que desea agregar");
+                }
+                else
+                {
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+                    //Articulo aux = new Articulo();
 
-            seleccionado.Imagen = tbURLImag.Text;
-            negocio.agregarImagen(negocio.leerDatos(seleccionado));
-            MessageBox.Show("Imagen agregada exitosamente");
+                    seleccionado.Imagen = tbURLImag.Text;
+                    negocio.agregarImagen(negocio.leerDatos(seleccionado));
+                    MessageBox.Show("Imagen agregada exitosamente");
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         private void btSalir_Click(object sender, EventArgs e)

@@ -33,9 +33,20 @@ namespace TPWinforms
             Close();
         }
 
+        private bool soloNumeros(string cadena)
+        {
+            foreach(char caracter in cadena)
+            {
+                if (!(char.IsNumber(caracter)))
+                    return false;
+            }
+
+            return true;
+        }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
+            string error = "";
 
             try
             {
@@ -43,31 +54,59 @@ namespace TPWinforms
                 {
                     articuloAux = new Articulo();
                 }
-                
-                articuloAux.Codigo = txbCodigo.Text;
-                articuloAux.Nombre = txbNombre.Text;
-                articuloAux.Descripcion = txbDescripcion.Text;
-                articuloAux.Imagen = txbUrlImagen.Text;
-                articuloAux.Marca = (Marca)cboMarca.SelectedItem;
-                articuloAux.Categoria = (Categoria)cboCategoria.SelectedItem;
-                articuloAux.Precio = decimal.Parse(txbPrecio.Text);
 
-                
-                if (articuloAux.Id != 0)
+                if (txbCodigo.Text == "")
                 {
-                    negocio.modificar(articuloAux);
-                    MessageBox.Show("Articulo modificado en el inventario");
+                    error = error + "Debe cargar el campo código. ";
+                }
+                if (txbNombre.Text == "")
+                {
+                    error = error + "Debe cargar el campo nombre. ";
+                }
+                if (txbPrecio.Text == "")
+                {
+                    error = error + "Debe cargar el campo precio. ";
+                }
+                if (!(soloNumeros(txbPrecio.Text)))
+                {
+                    error = error + "Solo cargar números en el campo precio. ";
+                }
+
+                if (error == "")
+                {
+                    articuloAux.Codigo = txbCodigo.Text;
+                    articuloAux.Nombre = txbNombre.Text;
+                    articuloAux.Descripcion = txbDescripcion.Text;
+                    articuloAux.Imagen = txbUrlImagen.Text;
+                    articuloAux.Marca = (Marca)cboMarca.SelectedItem;
+                    articuloAux.Categoria = (Categoria)cboCategoria.SelectedItem;
+                    articuloAux.Precio = decimal.Parse(txbPrecio.Text);
+
+                    if (articuloAux.Id != 0)
+                    {
+                        negocio.modificar(articuloAux);
+                        MessageBox.Show("Articulo modificado en el inventario");
+                    }
+                    else
+                    {
+
+                        negocio.agregar(articuloAux);
+                        negocio.agregarImagen(negocio.leerDatos(articuloAux));
+                        MessageBox.Show("Articulo agregado en el inventario");
+
+
+                    }
+
+                    Close();
                 }
                 else
                 {
-                    negocio.agregar(articuloAux);
-                    negocio.agregarImagen(negocio.leerDatos(articuloAux));
-                    MessageBox.Show("Articulo agregado en el inventario");
-                    
-
+                    MessageBox.Show(error);
                 }
                 
-                Close();
+
+
+                
             }
             catch (Exception ex)
             {

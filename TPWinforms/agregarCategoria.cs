@@ -21,11 +21,27 @@ namespace TPWinforms
 
         private void btAgregar_Click(object sender, EventArgs e)
         {
-            Categoria nueva = new Categoria();
-            nueva.Nombre = tbCategoria.Text;
-            CategoriaNegocio negocio = new CategoriaNegocio();
-            negocio.agregarCategoria(nueva);
-            MessageBox.Show("Categoria agregada correctamente");
+            try
+            {
+                if(tbCategoria.Text == "")
+                {
+                    MessageBox.Show("Por favor, completar con los datos necesarios");
+                }
+                else
+                {
+                    Categoria nueva = new Categoria();
+                    nueva.Nombre = tbCategoria.Text;
+                    CategoriaNegocio negocio = new CategoriaNegocio();
+                    negocio.agregarCategoria(nueva);
+                    MessageBox.Show("Categoria agregada correctamente");
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         private void btSalir_Click(object sender, EventArgs e)
